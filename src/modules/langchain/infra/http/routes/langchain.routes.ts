@@ -31,9 +31,9 @@ import {
 import { processChatInstructionsHandler } from '../handlers/processChatInstructionsHandler';
 import { processChatInstructionsByCategoryHandler } from '../handlers/processChatInstructionsByCategoryHandler';
 import {
-  ProcessToolMultiplyBodyType,
-  processToolMultiplyBodySchema,
-} from '../schemas/bodies/processToolMultiply';
+  ProcessCalculationToolBodyType,
+  processCalculationToolBodySchema,
+} from '../schemas/bodies/processCalculationTool';
 import { processToolMultiplyHandler } from '../handlers/processToolMultiplyHandler';
 
 export async function langchainRouter(app: FastifyInstance): Promise<void> {
@@ -122,12 +122,12 @@ export async function langchainRouter(app: FastifyInstance): Promise<void> {
     processChatInstructionsByCategoryHandler,
   );
 
-  app.post<{ Body: ProcessToolMultiplyBodyType }>(
+  app.post<{ Body: ProcessCalculationToolBodyType }>(
     '/tools/multiply',
     {
       schema: {
         summary: 'Multiply two numbers.',
-        body: processToolMultiplyBodySchema,
+        body: processCalculationToolBodySchema,
         tags: ['Langchain'],
       },
     },

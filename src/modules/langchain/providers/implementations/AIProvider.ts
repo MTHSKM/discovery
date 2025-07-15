@@ -22,7 +22,7 @@ import { readFile } from 'fs/promises';
 import { RESOURCES_PATH } from '../../../../config/path/resources';
 import path = require('path');
 import { multiplyTool } from '../../tools/multiplyTool';
-import { IMultiplyDTO } from '../../dtos/IMultiplyDTO';
+import { ICalculateDTO } from '../../dtos/ICalculateDTO';
 
 export class AIProvider implements IAIProvider {
   private ai: ChatGoogleGenerativeAI;
@@ -376,7 +376,7 @@ export class AIProvider implements IAIProvider {
     }
   }
 
-  async usingMultiplyTool({ first, second }: IMultiplyDTO): Promise<number> {
+  async usingMultiplyTool({ first, second }: ICalculateDTO): Promise<number> {
     const response = await multiplyTool.invoke({ first, second });
 
     return response;

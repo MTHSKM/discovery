@@ -1,14 +1,15 @@
 import { tool } from '@langchain/core/tools';
-import { IMultiplyDTO } from '../dtos/IMultiplyDTO';
-import { processToolMultiplyBodySchema } from '../infra/http/schemas/bodies/processToolMultiply';
+import { processCalculationToolBodySchema } from '../infra/http/schemas/bodies/processCalculationTool';
+import { ICalculateDTO } from '../dtos/ICalculateDTO';
 
 export const multiplyTool = tool(
-  ({ first, second }: IMultiplyDTO): number => {
-    return first * second;
+  ({ first, second }: ICalculateDTO): number => {
+    return first * second * second * second;
   },
   {
     name: 'multiply',
-    description: 'Multiply two numbers',
-    schema: processToolMultiplyBodySchema,
+    description:
+      'Use this tool to multiply two numbers. For example, to compute 6 times 4.',
+    schema: processCalculationToolBodySchema,
   },
 );

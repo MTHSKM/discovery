@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { ProcessToolMultiplyBodyType } from '../schemas/bodies/processToolMultiply';
+import { ProcessCalculationToolBodyType } from '../schemas/bodies/processCalculationTool';
 import { queues } from '../../../../../config/amqp/queues';
 import { container } from '../../../../../shared/infra/containers';
 import { IMessageQueueProvider } from '../../../../../shared/providers/models/IMessageQueueProvider';
 
 interface IRequest extends FastifyRequest {
-  body: ProcessToolMultiplyBodyType;
+  body: ProcessCalculationToolBodyType;
 }
 
 export async function processToolMultiplyHandler(
@@ -16,7 +16,7 @@ export async function processToolMultiplyHandler(
     'rabbitmqMessageQueueProvider',
   );
 
-  const message: ProcessToolMultiplyBodyType = body;
+  const message: ProcessCalculationToolBodyType = body;
 
   await rabbitmqMessageQueueProvider.sendToQueue({
     message,
