@@ -51,16 +51,20 @@ export class SimpleAgent implements ISimpleAgent {
     const prompt = ChatPromptTemplate.fromMessages([
       [
         'system',
-        `You are a helpful assistant with access to tools that can perform math operations: sum, subtract, multiply, and divide. 
-    Use the appropriate tool from the list to calculate the result based on the inputs {first} and {second}.
-    Only use the tools provided, and do not make calculations yourself.`,
+        `You are a helpful assistant with access to tools that can perform math operations.
+        You must use the appropriate tool from the list to calculate the result based on the inputs {first} and {second}.
+        Only use the tools provided, and do not make calculations yourself.
+
+        In some cases, you may need to combine multiple tools to get the final result.
+        For example, to perform exponentiation (e.g., 2^3), you would need to multiply 2 by itself multiple times using the multiply tool.`,
       ],
       [
         'human',
-        'Given the numbers {first} and {second}, use the {tool} tool to perform the calculation and respond ONLY with "answer is: " and the result.',
+        `Given the numbers {first} and {second}, use the correct tool(s) to perform the calculation based on the {operator}.
+        Explain which tool(s) were used and why.
+        Then, respond with: "answer is: " followed by the final result.`,
       ],
       ['placeholder', '{agent_scratchpad}'],
-      ['human', 'only respond the result is and the calculation'],
     ]);
 
     this.agent = createToolCallingAgent({
@@ -72,6 +76,8 @@ export class SimpleAgent implements ISimpleAgent {
     this.agentExecutor = new AgentExecutor({
       agent: this.agent,
       tools: [multiplyTool, sumTool, subtractTool, divideTool],
+      maxIterations: 20,
+      verbose: true,
     });
   }
 
@@ -82,15 +88,12 @@ export class SimpleAgent implements ISimpleAgent {
   }: ICalculateDTO & { operator: string }): Promise<number> {
     const baseChain = PromptTemplate.fromTemplate(
       `
-          Classifique o operador recebido entre as seguintes operações:
-          
-          - Adição
-          - Subtração
-          - Divisão
-          - Multiplicação
-    
-          Operador: {operator}
-          Classificação:
+        Classify the given operator as a valid mathematical operator.
+        Only respond with the name of the operator (e.g., "addition", "subtraction", "multiplication", "division").
+        Do not provide any explanation or extra text.
+        
+        Operator: {operator}
+        Classification:
         `,
     )
       .pipe(this.ai)
@@ -100,37 +103,11 @@ export class SimpleAgent implements ISimpleAgent {
 
     console.log(baseResponse);
 
-    const operation = baseResponse.toLowerCase();
-
-    let result: number;
-
-    if (operation.includes('multiplicação')) {
-      result = await this.agentExecutor.invoke({
-        first,
-        second,
-        tool: 'multiplyTool',
-      });
-    } else if (operation.includes('divisão')) {
-      result = await this.agentExecutor.invoke({
-        first,
-        second,
-        tool: 'divideTool',
-      });
-    } else if (operation.includes('subtração')) {
-      result = await this.agentExecutor.invoke({
-        first,
-        second,
-        tool: 'subtractTool',
-      });
-    } else if (operation.includes('adição')) {
-      result = await this.agentExecutor.invoke({
-        first,
-        second,
-        tool: 'sumTool',
-      });
-    } else {
-      result = -1;
-    }
+    const result = await this.agentExecutor.invoke({
+      first,
+      second,
+      operator: baseResponse,
+    });
 
     return result;
   }

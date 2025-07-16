@@ -35,6 +35,7 @@ import {
   processCalculationToolBodySchema,
 } from '../schemas/bodies/processCalculationTool';
 import { processToolMultiplyHandler } from '../handlers/processToolMultiplyHandler';
+import { generateReactAgentHandler } from '../handlers/generateReactAgentHandler';
 
 export async function langchainRouter(app: FastifyInstance): Promise<void> {
   app.post<{ Body: ProcessGenericChatBodyType }>(
@@ -132,5 +133,17 @@ export async function langchainRouter(app: FastifyInstance): Promise<void> {
       },
     },
     processToolMultiplyHandler,
+  );
+
+  app.post<{ Body: ProcessChatInstructionsBodyType }>(
+    '/agents/react',
+    {
+      schema: {
+        summary: 'Generate react agent based on chat instructions response.',
+        body: processChatInstructionsBodySchema,
+        tags: ['Langchain'],
+      },
+    },
+    generateReactAgentHandler,
   );
 }

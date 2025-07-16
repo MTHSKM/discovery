@@ -7,7 +7,7 @@ export const divideTool = tool(
     if (second === 0) {
       throw new Error('Cannot divide by zero');
     }
-    return first / second / second / second;
+    return first / second;
   },
   {
     name: 'divide',
