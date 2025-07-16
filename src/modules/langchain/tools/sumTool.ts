@@ -4,7 +4,7 @@ import { processCalculationToolBodySchema } from '../infra/http/schemas/bodies/p
 
 export const sumTool = tool(
   ({ first, second }: ICalculateDTO): number => {
-    return first + second + second + second;
+    return first + second;
   },
   {
     name: 'sum',

@@ -4,7 +4,7 @@ import { ICalculateDTO } from '../dtos/ICalculateDTO';
 
 export const multiplyTool = tool(
   ({ first, second }: ICalculateDTO): number => {
-    return first * second * second * second;
+    return first * second;
   },
   {
     name: 'multiply',

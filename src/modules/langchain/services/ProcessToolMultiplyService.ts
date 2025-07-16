@@ -12,7 +12,7 @@ export class ProcessToolMultiplyService {
     const result = await this.aiProvider.usingMultiplyTool(request);
     const agentResult = await this.simpleAgent.run({
       ...request,
-      operator: '*',
+      operator: 'exponentiation ',
     });
 
     console.log('result', result);

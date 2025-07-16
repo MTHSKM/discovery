@@ -9,6 +9,7 @@ import { processDynamicMessageConsumer } from './consumers/processDynamicMessage
 import { processChatInstructionsConsumer } from './consumers/processChatInstructionsConsumer';
 import { processChatInstructionsByCategoryConsumer } from './consumers/processChatInstructionsByCategoryConsumer';
 import { processToolMultiplyConsumer } from './consumers/processToolMultiplyConsumer';
+import { generateReactAgentConsumer } from './consumers/genereteReactAgentConsumer';
 
 export async function setLangchainConsumers(): Promise<void> {
   const rabbitmqMessageQueueProvider = container.resolve<IMessageQueueProvider>(
@@ -61,5 +62,11 @@ export async function setLangchainConsumers(): Promise<void> {
     async_processing_number: 1,
     consumer: processToolMultiplyConsumer,
     queue: queues.toolMultiply,
+  });
+
+  await rabbitmqMessageQueueProvider.createConsumer({
+    async_processing_number: 1,
+    consumer: generateReactAgentConsumer,
+    queue: queues.generateReactAgent,
   });
 }

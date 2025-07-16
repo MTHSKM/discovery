@@ -13,7 +13,7 @@
     "module": "commonjs",
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/modules/langchain/tools/tavilyTool.js"],
   "exclude": [
     "node_modules",
     ".webpack",

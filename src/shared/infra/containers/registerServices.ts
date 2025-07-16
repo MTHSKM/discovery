@@ -8,6 +8,8 @@ import { ProcessHistoryQuestionService } from '../../../modules/langchain/servic
 import { ProcessChatInstructionsService } from '../../../modules/langchain/services/ProcessChatInstructionsService';
 import { ProcessChatInstructionsByCategoryService } from '../../../modules/langchain/services/ProcessChatInstructionsByCategoryService';
 import { ProcessToolMultiplyService } from '../../../modules/langchain/services/ProcessToolMultiplyService';
+import { GenerateReactAgentService } from '../../../modules/langchain/services/GenerateReactAgentService';
+import { GenerateEmbeddingsService } from '../../../modules/langchain/services/GenerateEmbeddingsService';
 
 export function registerServices(container: AwilixContainer): void {
   container.register(
@@ -55,6 +57,20 @@ export function registerServices(container: AwilixContainer): void {
   container.register(
     'processToolMultiplyService',
     asClass(ProcessToolMultiplyService, {
+      lifetime: 'SINGLETON',
+    }),
+  );
+
+  container.register(
+    'generateReactAgentService',
+    asClass(GenerateReactAgentService, {
+      lifetime: 'SINGLETON',
+    }),
+  );
+
+  container.register(
+    'generateEmbeddingsService',
+    asClass(GenerateEmbeddingsService, {
       lifetime: 'SINGLETON',
     }),
   );

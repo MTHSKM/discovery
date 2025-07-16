@@ -7,4 +7,5 @@ export const queues = {
   chatInstructions: 'chat-instructions',
   chatInstructionsCategory: 'chat-instructions-category',
   toolMultiply: 'tool-multiply',
+  generateReactAgent: 'generate-react-agent',
 };
