@@ -55,7 +55,7 @@ export class AIProvider implements IAIProvider {
       temperature: 1,
       maxRetries: 2,
       apiKey: this.apiKey,
-      maxOutputTokens: 200000,
+      maxOutputTokens: 20000,
       // cache: true, // InMemoryCache
       cache, // RedisCache
       verbose: true,
@@ -87,10 +87,8 @@ export class AIProvider implements IAIProvider {
     const containsSim = /\bsim\b/.test(normalized);
 
     if (startsWithNao || (!startsWithSim && containsNao && !containsSim)) {
-      console.log('Response is inappropriate.');
       return 'A resposta foi considerada inapropriada.';
     } else if (startsWithSim || containsSim) {
-      console.log('Response is appropriate.');
       const response = await this.ai.pipe(new StringOutputParser()).invoke([
         {
           role: request.role,
@@ -100,7 +98,6 @@ export class AIProvider implements IAIProvider {
 
       return response;
     } else {
-      console.log('Unclear response, returning original content.');
       return content;
     }
   }
@@ -308,8 +305,6 @@ export class AIProvider implements IAIProvider {
     const baseResponse = await baseChain.invoke({
       question,
     });
-
-    console.log(baseResponse);
 
     const financialChain = PromptTemplate.fromTemplate(
       `

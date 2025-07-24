@@ -101,8 +101,6 @@ export class SimpleAgent implements ISimpleAgent {
 
     const baseResponse = await baseChain.invoke({ operator });
 
-    console.log(baseResponse);
-
     const result = await this.agentExecutor.invoke({
       first,
       second,
