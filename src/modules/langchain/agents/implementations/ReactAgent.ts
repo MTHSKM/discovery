@@ -40,7 +40,7 @@ export class ReactAgent implements IReactAgent {
       temperature: 1,
       maxRetries: 2,
       apiKey: this.apiKey,
-      maxOutputTokens: 200000,
+      maxOutputTokens: 20000,
       verbose: true,
     });
 
@@ -64,8 +64,6 @@ export class ReactAgent implements IReactAgent {
 
   async run(question: string): Promise<string> {
     const result = await this.agentExecutor.invoke({ input: question });
-
-    console.log(`Tyranitar: ${result.input}`);
 
     return result.output;
   }
