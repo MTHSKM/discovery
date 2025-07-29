@@ -10,6 +10,7 @@ import { ProcessChatInstructionsByCategoryService } from '../../../modules/langc
 import { ProcessToolMultiplyService } from '../../../modules/langchain/services/ProcessToolMultiplyService';
 import { GenerateReactAgentService } from '../../../modules/langchain/services/GenerateReactAgentService';
 import { GenerateEmbeddingsService } from '../../../modules/langchain/services/GenerateEmbeddingsService';
+import { FirstScrappingService } from '../../../modules/web_scrapping/services/FirstScrappingService';
 
 export function registerServices(container: AwilixContainer): void {
   container.register(
@@ -71,6 +72,13 @@ export function registerServices(container: AwilixContainer): void {
   container.register(
     'generateEmbeddingsService',
     asClass(GenerateEmbeddingsService, {
+      lifetime: 'SINGLETON',
+    }),
+  );
+
+  container.register(
+    'firstScrappingService',
+    asClass(FirstScrappingService, {
       lifetime: 'SINGLETON',
     }),
   );
