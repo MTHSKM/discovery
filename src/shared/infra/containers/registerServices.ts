@@ -11,6 +11,7 @@ import { ProcessToolMultiplyService } from '../../../modules/langchain/services/
 import { GenerateReactAgentService } from '../../../modules/langchain/services/GenerateReactAgentService';
 import { GenerateEmbeddingsService } from '../../../modules/langchain/services/GenerateEmbeddingsService';
 import { FirstScrappingService } from '../../../modules/web_scrapping/services/FirstScrappingService';
+import { SecondScrappingService } from '../../../modules/web_scrapping/services/SecondScrappingService';
 
 export function registerServices(container: AwilixContainer): void {
   container.register(
@@ -79,6 +80,13 @@ export function registerServices(container: AwilixContainer): void {
   container.register(
     'firstScrappingService',
     asClass(FirstScrappingService, {
+      lifetime: 'SINGLETON',
+    }),
+  );
+
+  container.register(
+    'secondScrappingService',
+    asClass(SecondScrappingService, {
       lifetime: 'SINGLETON',
     }),
   );
