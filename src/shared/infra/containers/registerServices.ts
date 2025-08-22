@@ -12,6 +12,7 @@ import { GenerateReactAgentService } from '../../../modules/langchain/services/G
 import { GenerateEmbeddingsService } from '../../../modules/langchain/services/GenerateEmbeddingsService';
 import { FirstScrappingService } from '../../../modules/web_scrapping/services/FirstScrappingService';
 import { SecondScrappingService } from '../../../modules/web_scrapping/services/SecondScrappingService';
+import { ThirdScrappingService } from '../../../modules/web_scrapping/services/ThirdScrappingService';
 
 export function registerServices(container: AwilixContainer): void {
   container.register(
@@ -87,6 +88,13 @@ export function registerServices(container: AwilixContainer): void {
   container.register(
     'secondScrappingService',
     asClass(SecondScrappingService, {
+      lifetime: 'SINGLETON',
+    }),
+  );
+
+  container.register(
+    'thirdScrappingService',
+    asClass(ThirdScrappingService, {
       lifetime: 'SINGLETON',
     }),
   );

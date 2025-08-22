@@ -51,6 +51,7 @@
     "langchain": "^0.3.29",
     "mime": "^4.0.7",
     "pdf-parse": "^1.1.1",
-    "protobufjs": "^7.5.3"
+    "protobufjs": "^7.5.3",
+    "puppeteer": "^24.15.0"
   }
 }
